@@ -1,0 +1,66 @@
+<hr />
+<h2>Grafica 1 
+
+	<span class="small pull-right">
+		<a href="#" onclick="regenerarGrafica()"> <span class="glyphicon glyphicon-refresh"></span> &nbsp; Recargar</a>
+	</small>
+</h2>
+
+<div id="barras" style="min-height: 400px; background: #efefef; border: 1px solid #ccc;">
+ 
+</div>
+
+<script>
+var  chart;
+var tipoGrafica;
+
+tipoGrafica = 'bar';
+
+chart = c3.generate({
+     bindto: '#barras',
+    data: {
+      x : 'x',
+        columns: [
+			["x", "BARM", "DRGAL", "OBSV", "REFNR", "ROSRIO", "MIXCOA", "ZAPATA", "MAQ", "TASQ", "UNIVRS", "VIVERS", "CHAPUL", "OAXINS", "SANANT", "INDVER", "DEP18M", "POLITEC", "LARAZA", "MARCARR", "POTRO", "FERRPZA", "VILLACT", "SNANTA", "COYUYA", "CANSJN", "SNMRTA", "CN1947", "CNABAS", "TPALCT", "IZTAPA", "CNGARY", "CNCHAL", "APATL", "PERORT", "TACUBA", "TCBAYA", "TLAHUA", "HUIPLC", "BALBNA", "MOCTZA", "PANTLN", "BLVPAE", "SNLZRO", "ZARGZA", "DEPXCH", "XOCHIM", "4CAM", "LAPAZ", "CDAZTC"],
+			['Cargos', 1270, 6816, 984, 15573, 9253, 2573, 12952, 9689, 8956, 8798, 4139, 1774, 15376, 492, 9544, 6828, 3516, 12656, 4168, 19850, 8375, 287, 3011, 15842, 4952, 18388, 1072, 9802, 8248, 1957, 13353, 16730, 13262, 5995, 14852, 11628, 14996, 5502, 569, 9494, 8448, 15478, 5506, 5329, 8619, 10922, 4661, 14133, 10508],
+			['Abonos', 15914, 16016, 1029, 16814, 18605, 6011, 18016, 7981, 18639, 17099, 9847, 17742, 11017, 4282, 11522, 1096, 10738, 2558, 18041, 13044, 12804, 6929, 4403, 8586, 12213, 12392, 5609, 2722, 3966, 13950, 16659, 10452, 3063, 6601, 12552, 6775, 4503, 5347, 8290, 6692, 3287, 5185, 18871, 5203, 14415, 1118, 19296, 17307, 12887]
+		],
+        groups: [
+            ['Cargos', 'Abonos']
+        ],
+        type: 'bar'
+    },
+
+   axis: {
+    x: {
+      type: 'category' // this needed to load string x value
+    },
+     y: {
+      label: 'Monto',
+      tick: {
+                format: d3.format("$,")
+            }
+    }
+  }
+});
+
+function regenerarGrafica() {
+	
+	$.ajax({
+        url: 'data/graph1.json',     
+        data: {},
+        success: function(data, textStatus, jqXHR) {
+        	
+             chart.load({ columns: data });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+
+     		//Error handling code
+     		alert('Oops there was an error' + textStatus + ' - '+ errorThrown);
+   		}
+    });
+
+}
+
+
+</script>
